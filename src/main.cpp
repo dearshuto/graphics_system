@@ -9,15 +9,24 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "window_system/window_manager.hpp"
+#include "window_system/glfw/glfw_window_builder.hpp"
 
 int main(int argc, char** argv)
 {
+    fj::WindowManager windowManager{std::make_unique<fj::GLFWWindowBuilder>()};
+    
+    windowManager.initialize();
+    windowManager.mainloop();
+    windowManager.terminate();
+    
+    
     if (glfwInit() == GL_FALSE)
     {
         glfwTerminate();
         return 0;
     }
-    
+
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
