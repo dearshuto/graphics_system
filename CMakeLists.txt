@@ -56,18 +56,14 @@ foreach(FILE ${ALL_FILES})
 endforeach()
 
 # C++11を有効にする
-IF (APPLE)
-	add_definitions("-framework OpenGL")
-ENDIF()
-
-#add_definitions("-Wall -std=c++11")
+add_definitions("-Wall -std=c++14")
 add_executable(graphic_system
 	${ALL_FILES}
 	${IMGUI_SOURCES}
 )
 
 ## 依存関係
-add_dependencies(graphic_system glfw3 glew)
+#add_dependencies(graphic_system glfw3 glew)
 
 target_link_libraries(graphic_system
 	glfw3
