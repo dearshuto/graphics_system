@@ -6,6 +6,8 @@
 //
 //
 
+#include "utility/iterator.hpp"
+#include "window_toolkit_builder.hpp"
 #include "window_manager.hpp"
 
 fj::WindowManager::WindowManager(std::unique_ptr<fj::WindowBuilder> windowBuilder)
@@ -23,9 +25,37 @@ bool fj::WindowManager::initialize()
     return result;
 }
 
+void fj::WindowManager::generateWindow(const fj::WindowInfo &info)
+{
+    auto newWindow = getWindowGenerator().generateWindow(info);
+    getWindowContainerPtr()->addWindow(std::move(newWindow));
+}
+
 void fj::WindowManager::mainloop()
 {
-    
+    bool hasAnyUpdateWindow = false;
+    do {
+        hasAnyUpdateWindow = false;
+        
+        auto iterator = getWindowContainerPtr()->iterator();
+        
+        while (!iterator->isDone())
+        {
+            auto window = iterator->getCurrentItemPtr();
+            
+            bool kShouldUpdate = window->shouldUpdate();
+            
+            if(kShouldUpdate)
+            {
+                window->update();
+            }
+            
+            hasAnyUpdateWindow |= kShouldUpdate;
+            
+            iterator->next();
+        }
+        
+    } while (hasAnyUpdateWindow);
 }
 
 void fj::WindowManager::terminate()

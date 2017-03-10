@@ -1,13 +1,13 @@
 //
-//  window_builder.hpp
+//  window_toolkit_builder.hpp
 //  OpenGL
 //
 //  Created by Shuto Shikama on 2017/03/09.
 //
 //
 
-#ifndef window_builder_hpp
-#define window_builder_hpp
+#ifndef window_toolkit_builder_hpp
+#define window_toolkit_builder_hpp
 
 #include <memory>
 
@@ -33,4 +33,4 @@ public:
     virtual std::unique_ptr<fj::WindowContainer> createWindowContainer()const = 0;
 };
 
-#endif /* window_builder_hpp */
+#endif /* window_toolkit_builder_hpp */

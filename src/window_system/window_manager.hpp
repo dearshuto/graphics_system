@@ -10,11 +10,12 @@
 #define window_manager_hpp
 
 #include <memory>
-#include "window_builder.hpp"
 #include "window_container.hpp"
 #include "window_generator.hpp"
 
 namespace fj {
+    class WindowBuilder;
+    struct WindowInfo;
     class WindowManager;
 }
 
@@ -33,6 +34,8 @@ public:
     bool initialize();
     void mainloop();
     void terminate();
+    
+    void generateWindow(const fj::WindowInfo& info);
     
 private:
     const fj::WindowContainer& getWindowContainer()const;

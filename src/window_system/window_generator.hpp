@@ -23,11 +23,11 @@ public:
     WindowGenerator() = default;
     virtual~WindowGenerator() = default;
     
-    virtual bool initialize();
+    virtual bool initialize() = 0;
     
-    virtual void terminate();
+    virtual void terminate() = 0;
     
-    virtual std::unique_ptr<fj::Window> generateWindow()const = 0;
+    virtual std::unique_ptr<fj::Window> generateWindow(const fj::WindowInfo& windowInfo)const = 0;
 };
 
 #endif /* window_generator_hpp */
