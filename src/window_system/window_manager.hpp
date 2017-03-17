@@ -11,10 +11,10 @@
 
 #include <memory>
 #include "window_container.hpp"
-#include "window_generator.hpp"
+#include "window_system.hpp"
 
 namespace fj {
-    class WindowBuilder;
+    class WindowToolkitBuilder;
     struct WindowInfo;
     class WindowManager;
 }
@@ -23,29 +23,26 @@ namespace fj {
 class fj::WindowManager
 {
 public:
-    WindowManager() = delete;
+    WindowManager() = default;
     virtual~WindowManager() = default;
     
     WindowManager(const fj::WindowManager& other) = delete;
     fj::WindowManager& operator=(const fj::WindowManager& other) = delete;
-
-    WindowManager(std::unique_ptr<fj::WindowBuilder> windowBuilder);
         
     bool initialize();
     void mainloop();
     void terminate();
     
+private:
     void generateWindow(const fj::WindowInfo& info);
     
 private:
-    const fj::WindowContainer& getWindowContainer()const;
-    fj::WindowContainer*const getWindowContainerPtr();
-    
-    const fj::WindowGenerator& getWindowGenerator()const;
-    fj::WindowGenerator*const getWindowGeneratorPtr();
+    const fj::WindowSystem& getWindowSystem()const;
+    fj::WindowSystem*const getWindowSystemPtr();
 private:
-    std::unique_ptr<fj::WindowContainer> m_windowContainer{nullptr};
-    std::unique_ptr<fj::WindowGenerator> m_windowGenerator{nullptr};
+    std::unique_ptr<fj::Window> m_mainWindow;
+    
+    std::unique_ptr<fj::WindowSystem> m_windowSystem{nullptr};
 };
 
 #endif /* window_manager_hpp */

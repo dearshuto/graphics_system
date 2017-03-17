@@ -11,13 +11,9 @@
 
 int main(int argc, char** argv)
 {
-    fj::WindowManager windowManager{std::make_unique<fj::GLFWWindowToolkitBuilder>()};
+    fj::WindowManager windowManager;
     
     windowManager.initialize();
-    
-    fj::WindowInfo info;
-    windowManager.generateWindow(info);
-
     windowManager.mainloop();
     windowManager.terminate();
         

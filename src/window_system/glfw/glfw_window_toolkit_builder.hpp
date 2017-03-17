@@ -15,13 +15,16 @@ namespace fj {
     class GLFWWindowToolkitBuilder;
 }
 
-class fj::GLFWWindowToolkitBuilder : public fj::WindowBuilder
+class fj::GLFWWindowToolkitBuilder : public fj::WindowToolkitBuilder
 {
 public:
     GLFWWindowToolkitBuilder() = default;
     virtual~GLFWWindowToolkitBuilder() = default;
     
-    std::unique_ptr<fj::WindowGenerator> createWindowGenerator()const override;
+    std::unique_ptr<fj::WindowSystem> createWindowSystem()const override;
+    
+    bool initializeSystemExtension()override;
+
     std::unique_ptr<fj::WindowContainer> createWindowContainer()const override;
 };
 
