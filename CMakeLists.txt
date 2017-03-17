@@ -62,14 +62,15 @@ add_executable(graphic_system
 	${IMGUI_SOURCES}
 )
 
-## 依存関係
-#add_dependencies(graphic_system glfw3 glew)
 
 target_link_libraries(graphic_system
 	glfw3
-	glew
 	${OPENGL_FRAMEWORK} 
 	${IOKIT_FRAMEWORK} 
 	${COREVIDEO_FRAMEWORK}
 	${COCOA_FRAMEWORK}
+)
+target_link_libraries(graphic_system
+	optimized glew
+	debug glewd
 )

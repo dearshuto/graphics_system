@@ -13,23 +13,27 @@
 
 namespace fj {
     class Window;
-    class WindowContainer;
-    class WindowGenerator;
     struct WindowInfo;
-    class WindowBuilder;
+    class WindowSystem;
+    class WindowSystemExtension;
+    class WindowContainer;
+    class WindowToolkitBuilder;
 }
 
-class fj::WindowBuilder
+class fj::WindowToolkitBuilder
 {
 protected:
-    WindowBuilder() = default;
+    WindowToolkitBuilder() = default;
 public:
-    virtual~WindowBuilder() = default;
+    virtual~WindowToolkitBuilder() = default;
     
-    WindowBuilder(const fj::WindowBuilder& other) = delete;
-    fj::WindowBuilder& operator=(const fj::WindowBuilder& other) = delete;
+    WindowToolkitBuilder(const fj::WindowToolkitBuilder& other) = delete;
+    fj::WindowToolkitBuilder& operator=(const fj::WindowToolkitBuilder& other) = delete;
     
-    virtual std::unique_ptr<fj::WindowGenerator> createWindowGenerator()const = 0;
+    virtual std::unique_ptr<fj::WindowSystem> createWindowSystem()const = 0;
+    
+    virtual bool initializeSystemExtension() = 0;
+
     virtual std::unique_ptr<fj::WindowContainer> createWindowContainer()const = 0;
 };
 

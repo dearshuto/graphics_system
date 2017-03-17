@@ -6,79 +6,51 @@
 //
 //
 
+#include "glfw/glfw_window_toolkit_builder.hpp"
 #include "utility/iterator.hpp"
+#include "window_system.hpp"
 #include "window_toolkit_builder.hpp"
 #include "window_manager.hpp"
-
-fj::WindowManager::WindowManager(std::unique_ptr<fj::WindowBuilder> windowBuilder)
-{
-    m_windowContainer = windowBuilder->createWindowContainer();
-    m_windowGenerator = windowBuilder->createWindowGenerator();
-}
 
 bool fj::WindowManager::initialize()
 {
     bool result = true;
     
-    result &= getWindowGeneratorPtr()->initialize();
+    auto windowBuilder = std::make_unique<fj::GLFWWindowToolkitBuilder>();
+    m_windowSystem = windowBuilder->createWindowSystem();
+    
+    result &= m_windowSystem->initialize();
+    generateWindow({640, 480});
+    
+    result &= windowBuilder->initializeSystemExtension();
     
     return result;
 }
 
 void fj::WindowManager::generateWindow(const fj::WindowInfo &info)
 {
-    auto newWindow = getWindowGenerator().generateWindow(info);
-    getWindowContainerPtr()->addWindow(std::move(newWindow));
+    m_mainWindow = getWindowSystem().generateWindow(info);
 }
 
 void fj::WindowManager::mainloop()
 {
-    bool hasAnyUpdateWindow = false;
-    do {
-        hasAnyUpdateWindow = false;
-        
-        auto iterator = getWindowContainerPtr()->iterator();
-        
-        while (!iterator->isDone())
-        {
-            auto window = iterator->getCurrentItemPtr();
-            
-            bool kShouldUpdate = window->shouldUpdate();
-            
-            if(kShouldUpdate)
-            {
-                window->update();
-            }
-            
-            hasAnyUpdateWindow |= kShouldUpdate;
-            
-            iterator->next();
-        }
-        
-    } while (hasAnyUpdateWindow);
+    while (m_mainWindow->shouldUpdate())
+    {
+        m_mainWindow->update();
+    }
 }
 
 void fj::WindowManager::terminate()
 {
-    getWindowGeneratorPtr()->terminate();
+    getWindowSystemPtr()->terminate();
 }
 
-const fj::WindowContainer& fj::WindowManager::getWindowContainer()const
+const fj::WindowSystem& fj::WindowManager::getWindowSystem()const
 {
-    return *m_windowContainer;
+    return *m_windowSystem;
 }
 
-fj::WindowContainer*const fj::WindowManager::getWindowContainerPtr()
+fj::WindowSystem*const fj::WindowManager::getWindowSystemPtr()
 {
-    return m_windowContainer.get();
-}
-
-const fj::WindowGenerator& fj::WindowManager::getWindowGenerator()const
-{
-    return *m_windowGenerator;
-}
-
-fj::WindowGenerator*const fj::WindowManager::getWindowGeneratorPtr()
-{
-    return m_windowGenerator.get();
+    return m_windowSystem.get();
 }
