@@ -25,6 +25,8 @@ public:
     
     std::unique_ptr<fj::Window> generateWindow(const fj::WindowInfo& info)const override;
     
+    void waitEvent()const override;
+
     void terminate()override;
 };
 

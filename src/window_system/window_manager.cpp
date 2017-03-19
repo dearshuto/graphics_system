@@ -7,6 +7,8 @@
 //
 
 #include "glfw/glfw_window_toolkit_builder.hpp"
+#include "object/object.hpp"
+#include "shader/shader.hpp"
 #include "utility/iterator.hpp"
 #include "window_system.hpp"
 #include "window_toolkit_builder.hpp"
@@ -34,9 +36,17 @@ void fj::WindowManager::generateWindow(const fj::WindowInfo &info)
 
 void fj::WindowManager::mainloop()
 {
+    std::unique_ptr<fj::Shader> shader(new fj::Shader);
+    std::unique_ptr<fj::Object> object(new fj::Object);
+    
     while (m_mainWindow->shouldUpdate())
     {
-        m_mainWindow->update();
+        m_mainWindow->clear();
+        
+        object->draw(*shader);
+        
+        m_mainWindow->swapBuffers();
+        getWindowSystem().waitEvent();
     }
 }
 

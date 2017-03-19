@@ -9,18 +9,17 @@
 #include <GLFW/glfw3.h>
 #include "glfw_window.hpp"
 
-void redrawWindow(GLFWwindow*const window)
+void clearWindow(GLFWwindow*const window)
 {
     const float kR = 1.0f, kG = 1.0, kB = 1.0f, kA = 0.0f;
     glfwMakeContextCurrent(window);
     glClearColor(kR, kG, kB, kA);
     glClear(GL_COLOR_BUFFER_BIT);
-    glfwSwapBuffers(window);
 }
 
 void refleshWindowCallback(GLFWwindow* window)
 {
-    redrawWindow(window);
+    clearWindow(window);
 }
 
 fj::GLFWWindow::GLFWWindow(const fj::WindowInfo& info)
@@ -34,9 +33,14 @@ bool fj::GLFWWindow::shouldUpdate()const
     return (glfwWindowShouldClose(m_window) == GLFW_FALSE);
 }
 
-void fj::GLFWWindow::update()
+void fj::GLFWWindow::clear()
 {
-    redrawWindow(m_window);
+    clearWindow(m_window);
+}
+
+void fj::GLFWWindow::swapBuffers()
+{
+    glfwSwapBuffers(m_window);
     glfwWaitEvents();
 }
 

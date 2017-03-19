@@ -26,7 +26,8 @@ public:
     GLFWWindow(const fj::WindowInfo& info);
     
     bool shouldUpdate()const override;
-    void update()override;
+    void clear()override;
+    void swapBuffers()override;
     void terminate()override;
     
 private:
