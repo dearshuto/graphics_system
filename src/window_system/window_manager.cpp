@@ -39,6 +39,9 @@ void fj::WindowManager::mainloop()
     std::unique_ptr<fj::Shader> shader(new fj::Shader);
     std::unique_ptr<fj::Object> object(new fj::Object);
     
+    shader->initialize();
+    object->initialize();
+    
     while (m_mainWindow->shouldUpdate())
     {
         m_mainWindow->clear();

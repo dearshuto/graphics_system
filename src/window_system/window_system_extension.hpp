@@ -10,15 +10,15 @@
 #define window_system_extension_hpp
 
 namespace fj {
-    class WindowSystemWxtension;
+    class WindowSystemExtension;
 }
 
-class fj::WindowSystemWxtension
+class fj::WindowSystemExtension
 {
 protected:
-    WindowSystemWxtension() = default;
+    WindowSystemExtension() = default;
 public:
-    virtual~WindowSystemWxtension() = default;
+    virtual~WindowSystemExtension() = default;
     
     virtual bool initialize() = 0;
 };

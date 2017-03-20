@@ -26,6 +26,7 @@ fj::GLFWWindow::GLFWWindow(const fj::WindowInfo& info)
 {
     m_window = glfwCreateWindow(info.Width, info.Height, "", nullptr, nullptr);
     glfwSetWindowRefreshCallback(m_window, refleshWindowCallback);
+    glfwMakeContextCurrent(m_window);
 }
 
 bool fj::GLFWWindow::shouldUpdate()const
@@ -41,7 +42,7 @@ void fj::GLFWWindow::clear()
 void fj::GLFWWindow::swapBuffers()
 {
     glfwSwapBuffers(m_window);
-    glfwWaitEvents();
+//    glfwWaitEvents();
 }
 
 void fj::GLFWWindow::terminate()

@@ -9,6 +9,7 @@
 #ifndef object_hpp
 #define object_hpp
 
+#include <vector>
 #include "utility/OpenGL.h"
 
 namespace fj {
@@ -26,10 +27,16 @@ public:
     
     void draw(const fj::Shader& shader)const;
     
-    GLuint getVAO()const;
+    GLuint getVertexBufferObject()const;
+    
+    GLuint getElementBufferObject()const;
     
 private:
     GLuint m_VAO;
+    
+    GLuint m_VBO;
+    
+    GLuint m_EBO;
 };
 
 #endif /* object_hpp */
