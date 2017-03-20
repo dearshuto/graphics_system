@@ -28,6 +28,8 @@ public:
     
     virtual std::unique_ptr<fj::Window> generateWindow(const fj::WindowInfo& info)const = 0;
     
+    virtual void waitEvent()const = 0;
+    
     virtual void terminate() = 0;
 };
 

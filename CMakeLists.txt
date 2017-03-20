@@ -20,6 +20,9 @@ include_directories(${CMAKE_SOURCE_DIR}/vendor/glew/include)
 link_directories(${CMAKE_BINARY_DIR}/lib/)
 add_subdirectory(vendor/glew)
 
+## GLM
+include_directories(${CMAKE_SOURCE_DIR}/vendor/glm/)
+
 
 IF(APPLE)
 	find_library(OPENGL_FRAMEWORK OpenGL)

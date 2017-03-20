@@ -18,6 +18,7 @@ std::unique_ptr<fj::WindowSystem> fj::GLFWWindowToolkitBuilder::createWindowSyst
 
 bool fj::GLFWWindowToolkitBuilder::initializeSystemExtension()
 {
+    glewExperimental = GL_TRUE;
     return (glewInit() == GLEW_OK);
 }
 
