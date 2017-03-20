@@ -9,6 +9,7 @@
 #ifndef object_hpp
 #define object_hpp
 
+#include <string>
 #include <vector>
 #include "utility/OpenGL.h"
 
@@ -25,11 +26,17 @@ public:
     
     bool initialize();
     
+    bool initialize(const std::vector<GLfloat>& vertices, const std::vector<GLuint>& indices);
+    
+    bool initialize(const std::string& objFilename);
+    
     void draw(const fj::Shader& shader)const;
     
     GLuint getVertexBufferObject()const;
     
     GLuint getElementBufferObject()const;
+    
+    
     
 private:
     GLuint m_VAO;

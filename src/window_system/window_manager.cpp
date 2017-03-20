@@ -10,6 +10,7 @@
 #include "object/object.hpp"
 #include "shader/shader.hpp"
 #include "utility/iterator.hpp"
+#include "utility/OpenGL.h"
 #include "window_system.hpp"
 #include "window_toolkit_builder.hpp"
 #include "window_manager.hpp"
@@ -41,6 +42,8 @@ void fj::WindowManager::mainloop()
     
     shader->initialize();
     object->initialize();
+    
+    glEnable(GL_DEPTH_TEST);
     
     while (m_mainWindow->shouldUpdate())
     {

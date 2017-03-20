@@ -17,7 +17,7 @@ bool fj::GLFWWindowSystem::initialize()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    
+
     return (glfwInit() == GLFW_TRUE);
 }
 
@@ -28,7 +28,7 @@ std::unique_ptr<fj::Window> fj::GLFWWindowSystem::generateWindow(const fj::Windo
 
 void fj::GLFWWindowSystem::waitEvent()const
 {
-    glfwWaitEvents();
+    glfwPollEvents();
 }
 
 void fj::GLFWWindowSystem::terminate()

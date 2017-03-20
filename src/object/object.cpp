@@ -8,6 +8,7 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <gl/glew.h>
+#include <GLFW/glfw3.h>
 #include <glm/gtx/transform.hpp>
 #include "utility/OpenGL.h"
 #include "shader/shader.hpp"
@@ -19,10 +20,14 @@ bool fj::Object::initialize()
     glBindVertexArray(m_VAO);
 
     GLfloat vertices[] = {
-        0.5f,  0.5f, 0.0f,  // Top Right
-        0.5f, -0.5f, 0.0f,  // Bottom Right
-        -0.5f, -0.5f, 0.0f,  // Bottom Left
-        -0.5f,  0.5f, 0.0f   // Top Left
+        -0.5f, -0.5f,-0.5f,
+         0.5f, -0.5f,-0.5f,
+         0.5f, -0.5f, 0.5f,
+        -0.5f, -0.5f, 0.5f,
+        -0.5f,  0.5f,-0.5f,
+         0.5f,  0.5f,-0.5f,
+         0.5f,  0.5f, 0.5f,
+        -0.5f,  0.5f, 0.5f,
     };
 
     glGenBuffers(1, &m_VBO);
@@ -31,14 +36,24 @@ bool fj::Object::initialize()
     
 
     GLuint indices[] = {  // Note that we start from 0!
-        0, 1, 3,  // First Triangle
-        1, 2, 3   // Second Triangle
+        0, 1, 2,  // First Triangle
+        0, 2, 3,   // Second Triangle
+        4, 7, 6,
+        4, 6, 5,
+        2, 7, 3,
+        2, 6, 7,
+        1, 6, 2,
+        1, 5, 6,
+        0, 5, 1,
+        0, 4, 5,
+        3, 7, 0,
+        0, 7, 4
     };
     glGenBuffers(1, &m_EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
-     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
     
     glEnableVertexAttribArray(0);
     
@@ -57,12 +72,18 @@ void fj::Object::draw(const fj::Shader &shader)const
     auto projectionMatrixLocation = glGetUniformLocation(shader.getProgram(), "projectionMatrix");
     glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &kProjectionMatrix[0][0]);
 
-    const glm::mat4 kModelMatrix = glm::translate(glm::vec3{-10, -10, -10});
+    const glm::mat4 kViewMatrix = glm::translate(glm::vec3{0, 0, -3});
+    auto viewMatrixLocation = glGetUniformLocation(shader.getProgram(), "viewMatrix");
+    glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, &kViewMatrix[0][0]);
+
+    static glm::mat4 model(1.0);
+    
+    model =  glm::rotate(float(glfwGetTime()) * 3.0f, glm::vec3{1.0, 1.0, 0.0});
     auto modelMatrixLocation = glGetUniformLocation(shader.getProgram(), "modelMatrix");
-    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, &kModelMatrix[0][0]);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, &model[0][0]);
 
     glBindVertexArray(m_VAO);
-    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
     
     shader.unload();

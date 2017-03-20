@@ -14,7 +14,7 @@ void clearWindow(GLFWwindow*const window)
     const float kR = 1.0f, kG = 1.0, kB = 1.0f, kA = 0.0f;
     glfwMakeContextCurrent(window);
     glClearColor(kR, kG, kB, kA);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void refleshWindowCallback(GLFWwindow* window)

@@ -99,10 +99,11 @@ bool fj::Shader::initialize()
     "#version 120\n"
     "attribute vec3 position;\n"
     "uniform mat4 projectionMatrix;\n"
+    "uniform mat4 viewMatrix;\n"
     "uniform mat4 modelMatrix;\n"
     "void main(void)\n"
     "{\n"
-    "  gl_Position = projectionMatrix * modelMatrix * vec4(position, 1.0);\n"
+    "  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);\n"
     "}\n";
     
     // フラグメントシェーダのソースプログラム
