@@ -33,7 +33,7 @@ bool fj::Object::initialize()
     glGenBuffers(1, &m_VBO);
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    
+
 
     GLuint indices[] = {  // Note that we start from 0!
         0, 1, 2,  // First Triangle
@@ -87,6 +87,18 @@ void fj::Object::draw(const fj::Shader &shader)const
     glBindVertexArray(0);
     
     shader.unload();
+}
+
+void fj::Object::terminate()
+{
+    glDeleteBuffers(1, &m_EBO);
+    glDeleteBuffers(1, &m_VBO);
+    glDeleteBuffers(1, &m_VAO);
+}
+
+GLuint fj::Object::getVertexArrayObject()const
+{
+    return m_VAO;
 }
 
 GLuint fj::Object::getVertexBufferObject()const
