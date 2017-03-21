@@ -7,7 +7,9 @@
 //
 
 #include "glfw/glfw_window_toolkit_builder.hpp"
+#include "object/loader/wavefront_obj_loader.hpp"
 #include "object/object.hpp"
+#include "object/formatted_object.hpp"
 #include "shader/shader.hpp"
 #include "utility/iterator.hpp"
 #include "utility/OpenGL.h"
@@ -38,9 +40,10 @@ void fj::WindowManager::generateWindow(const fj::WindowInfo &info)
 void fj::WindowManager::mainloop()
 {
     std::unique_ptr<fj::Shader> shader(new fj::Shader);
-    std::unique_ptr<fj::Object> object(new fj::Object);
+    auto object = std::make_unique<fj::FormattedObject>(std::make_unique<fj::WavefrontObjLoader>());
     
     shader->initialize();
+    object->loadFromFile("armadillo.obj");
     object->initialize();
     
     glEnable(GL_DEPTH_TEST);
@@ -54,6 +57,7 @@ void fj::WindowManager::mainloop()
         m_mainWindow->swapBuffers();
         getWindowSystem().waitEvent();
     }
+    
 }
 
 void fj::WindowManager::terminate()

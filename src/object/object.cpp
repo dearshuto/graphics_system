@@ -14,54 +14,14 @@
 #include "shader/shader.hpp"
 #include "object.hpp"
 
-bool fj::Object::initialize()
+fj::Object::Object()
 {
     glGenBuffers(1, &m_VAO);
-    glBindVertexArray(m_VAO);
+}
 
-    GLfloat vertices[] = {
-        -0.5f, -0.5f,-0.5f,
-         0.5f, -0.5f,-0.5f,
-         0.5f, -0.5f, 0.5f,
-        -0.5f, -0.5f, 0.5f,
-        -0.5f,  0.5f,-0.5f,
-         0.5f,  0.5f,-0.5f,
-         0.5f,  0.5f, 0.5f,
-        -0.5f,  0.5f, 0.5f,
-    };
-
-    glGenBuffers(1, &m_VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    
-
-    GLuint indices[] = {  // Note that we start from 0!
-        0, 1, 2,  // First Triangle
-        0, 2, 3,   // Second Triangle
-        4, 7, 6,
-        4, 6, 5,
-        2, 7, 3,
-        2, 6, 7,
-        1, 6, 2,
-        1, 5, 6,
-        0, 5, 1,
-        0, 4, 5,
-        3, 7, 0,
-        0, 7, 4
-    };
-    glGenBuffers(1, &m_EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-    
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-    
-    glEnableVertexAttribArray(0);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0); // Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind
-    
-    glBindVertexArray(0);
-    
-    return true;
+fj::Object::~Object()
+{
+    glDeleteBuffers(1, &m_VAO);
 }
 
 void fj::Object::draw(const fj::Shader &shader)const
@@ -82,19 +42,14 @@ void fj::Object::draw(const fj::Shader &shader)const
     auto modelMatrixLocation = glGetUniformLocation(shader.getProgram(), "modelMatrix");
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, &model[0][0]);
 
-    glBindVertexArray(m_VAO);
-    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
+    glBindVertexArray(getVertexArrayObject());
+    glDrawElements(GL_TRIANGLES, getDrawNum(), GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
     
     shader.unload();
 }
 
-GLuint fj::Object::getVertexBufferObject()const
+GLuint fj::Object::getVertexArrayObject()const
 {
-    return m_VBO;
-}
-
-GLuint fj::Object::getElementBufferObject()const
-{
-    return m_EBO;
+    return m_VAO;
 }

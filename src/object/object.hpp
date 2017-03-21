@@ -18,32 +18,23 @@ namespace fj {
     class Object;
 }
 
+/// 三角ポリゴンのみで構成されるメッシュ
 class fj::Object
 {
 public:
-    Object() = default;
-    virtual~Object() = default;
+    Object();
+    virtual~Object();
     
-    bool initialize();
-    
-    bool initialize(const std::vector<GLfloat>& vertices, const std::vector<GLuint>& indices);
-    
-    bool initialize(const std::string& objFilename);
+    virtual bool initialize() = 0;
     
     void draw(const fj::Shader& shader)const;
     
-    GLuint getVertexBufferObject()const;
+    GLuint getVertexArrayObject()const;
     
-    GLuint getElementBufferObject()const;
-    
-    
+    virtual GLsizei getDrawNum()const = 0;
     
 private:
     GLuint m_VAO;
-    
-    GLuint m_VBO;
-    
-    GLuint m_EBO;
 };
 
 #endif /* object_hpp */
