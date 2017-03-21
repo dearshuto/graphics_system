@@ -36,9 +36,8 @@ void fj::Object::draw(const fj::Shader &shader)const
     auto viewMatrixLocation = glGetUniformLocation(shader.getProgram(), "viewMatrix");
     glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, &kViewMatrix[0][0]);
 
-    static glm::mat4 model(1.0);
     
-    model =  glm::rotate(float(glfwGetTime()) * 3.0f, glm::vec3{1.0, 1.0, 0.0});
+    glm::mat4 model =  glm::rotate(float(glfwGetTime()) * 3.0f, glm::vec3{0.0, 1.0, 0.0});
     auto modelMatrixLocation = glGetUniformLocation(shader.getProgram(), "modelMatrix");
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, &model[0][0]);
 

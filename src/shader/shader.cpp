@@ -98,6 +98,7 @@ bool fj::Shader::initialize()
     static const GLchar vsrc[] =
     "#version 120\n"
     "attribute vec3 position;\n"
+    "attribute vec3 normal;\n"
     "uniform mat4 projectionMatrix;\n"
     "uniform mat4 viewMatrix;\n"
     "uniform mat4 modelMatrix;\n"
