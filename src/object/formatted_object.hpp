@@ -25,7 +25,11 @@ public:
     FormattedObject(std::unique_ptr<fj::MeshLoader> loader);
     ~FormattedObject() = default;
     
+    bool initialize()override;
+    
     bool loadFromFile(const std::string& filename);
+
+    GLsizei getDrawNum()const override;
     
     fj::MeshLoader*const getMeshLoaderPtr();
     
@@ -34,6 +38,10 @@ public:
     const GLfloat*const getFrontPtr()const;
 
 private:
+    GLuint m_VBO;
+    
+    GLuint m_EBO;
+    
     std::unique_ptr<fj::MeshLoader> m_loader;
 };
 

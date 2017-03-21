@@ -23,6 +23,8 @@ public:
     
     /** @copydoc fj::MeshLoader::loadFromFile() */
     bool loadFromFile(const std::string& filename)override;
+    
+    GLsizei getDrawNum()const override;
 };
 
 #endif /* wavefront_obj_loader_hpp */

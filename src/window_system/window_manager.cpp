@@ -43,8 +43,8 @@ void fj::WindowManager::mainloop()
     auto object = std::make_unique<fj::FormattedObject>(std::make_unique<fj::WavefrontObjLoader>());
     
     shader->initialize();
-    object->initialize();
     object->loadFromFile("armadillo.obj");
+    object->initialize();
     
     glEnable(GL_DEPTH_TEST);
     
@@ -58,7 +58,6 @@ void fj::WindowManager::mainloop()
         getWindowSystem().waitEvent();
     }
     
-    object->terminate();
 }
 
 void fj::WindowManager::terminate()

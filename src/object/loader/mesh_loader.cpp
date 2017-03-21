@@ -15,5 +15,15 @@ GLsizeiptr fj::MeshLoader::getArrayBufferSize()const
 
 const GLfloat*const fj::MeshLoader::getFrontPtr()const
 {
-    return &m_vertex_normal.front();
+    return &m_vertex_normal[0];
+}
+
+GLsizeiptr fj::MeshLoader::getIndexBufferSize()const
+{
+    return m_indices.size() * sizeof(GLuint);
+}
+
+const GLuint*const fj::MeshLoader::getIndicesFrontPtr()const
+{
+    return &m_indices[0];
 }

@@ -22,27 +22,19 @@ namespace fj {
 class fj::Object
 {
 public:
-    Object() = default;
-    virtual~Object() = default;
+    Object();
+    virtual~Object();
     
-    bool initialize();
-    
-    void terminate();
+    virtual bool initialize() = 0;
     
     void draw(const fj::Shader& shader)const;
     
     GLuint getVertexArrayObject()const;
     
-    GLuint getVertexBufferObject()const;
-    
-    GLuint getElementBufferObject()const;
+    virtual GLsizei getDrawNum()const = 0;
     
 private:
     GLuint m_VAO;
-    
-    GLuint m_VBO;
-    
-    GLuint m_EBO;
 };
 
 #endif /* object_hpp */

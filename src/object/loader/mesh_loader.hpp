@@ -33,6 +33,12 @@ public:
     
     const GLfloat*const getFrontPtr()const;
     
+    GLsizeiptr getIndexBufferSize()const;
+    
+    const GLuint*const getIndicesFrontPtr()const;
+    
+    virtual GLsizei getDrawNum()const = 0;
+    
 protected:
     /// 位置(x, y, z), 法線(x, y, z)のように, 位置情報と法線情報の6つが連続してならんでいる
     std::vector<GLfloat> m_vertex_normal;
