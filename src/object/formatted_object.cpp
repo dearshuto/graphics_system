@@ -17,6 +17,7 @@ fj::FormattedObject::FormattedObject(std::unique_ptr<fj::MeshLoader> loader)
 
 bool fj::FormattedObject::initialize()
 {
+    //---- VAOの設定 ---------------------------------------
     glBindVertexArray(getVertexArrayObject());
 
     // 頂点情報のセットアップ
@@ -36,12 +37,17 @@ bool fj::FormattedObject::initialize()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, kIndicesSize, kIndicesData, GL_STATIC_DRAW);
     
+    // 頂点
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
-    
     glEnableVertexAttribArray(0);
+    
+    // 法線
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(1);
     
     glBindBuffer(GL_ARRAY_BUFFER, 0); // Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind
     
+    //---- VAOの設定終わり ---------------------------------------
     glBindVertexArray(0);
 
     return true;
