@@ -62,6 +62,26 @@ bool fj::ShaderProgram::createProgram()
     return false;
 }
 
+GLint fj::ShaderProgram::getUniformLocation(const std::string &uniformName)const
+{
+    return glGetUniformLocation(getProgram(), uniformName.c_str());
+}
+
+GLint fj::ShaderProgram::getProjectionMatrixLocation()const
+{
+    return getUniformLocation("projectionMatrix");
+}
+
+GLint fj::ShaderProgram::getViewMatrixLocation()const
+{
+    return getUniformLocation("viewMatrix");
+}
+
+GLint fj::ShaderProgram::getModelMatrixLocation()const
+{
+    return getUniformLocation("modelMatrix");
+}
+
 void fj::ShaderProgram::load()const
 {
     glUseProgram(m_program);

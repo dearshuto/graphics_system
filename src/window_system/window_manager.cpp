@@ -50,22 +50,32 @@ void fj::WindowManager::mainloop()
     "layout (location = 0) in vec3 position;\n"
     "layout (location = 1) in vec3 normal;\n"
     "out vec3 normalOut;\n"
+    "out vec3 fragPos;\n"
     "uniform mat4 projectionMatrix;\n"
     "uniform mat4 viewMatrix;\n"
     "uniform mat4 modelMatrix;\n"
     "void main(void)\n"
     "{\n"
     "  normalOut = normal;\n"
+    "  fragPos = vec3(modelMatrix * vec4(position, 1.0f));\n"
     "  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);\n"
     "}\n";
     
     const std::string fsrc =
     "#version 330 core\n"
-    "in vec3 normalOut;\n"
     "out vec4 color;\n"
+    "in vec3 normalOut;\n"
+    "in vec3 fragPos;\n"
     "void main(void)\n"
     "{\n"
-    "  color = vec4(normalOut[0], normalOut[1], normalOut[2], 1.0);\n"
+    "  vec3 lightColor = vec3(1.0, 0.8, 0.6);\n"
+    "  vec3 objectColor = vec3(1.0, 1.0, 1.0);\n"
+    "  vec3 norm = normalize(normalOut);\n"
+    "  vec3 lightDirection = normalize(vec3(0, 10, -10) - fragPos);\n"
+    "  vec3 diffuse = max(dot(norm, lightDirection), 0.0) * lightColor;\n"
+    "  vec3 ambient = vec3(0.1);\n"
+    "  vec3 result = (diffuse + ambient) * objectColor;\n"
+    "  color = vec4(result.r, result.g, result.b, 1.0);\n"
     "}\n";
 
     std::shared_ptr<fj::FragmentShader> fragmentShader{new fj::FragmentShader};
