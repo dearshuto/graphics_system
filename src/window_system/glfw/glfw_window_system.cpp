@@ -13,12 +13,14 @@
 
 bool fj::GLFWWindowSystem::initialize()
 {
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    const auto kInitializeResult = (glfwInit() == GLFW_TRUE);
+    
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-    return (glfwInit() == GLFW_TRUE);
+    return kInitializeResult;
 }
 
 std::unique_ptr<fj::Window> fj::GLFWWindowSystem::generateWindow(const fj::WindowInfo &info)const
