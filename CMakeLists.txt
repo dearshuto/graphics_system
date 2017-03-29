@@ -23,6 +23,10 @@ add_subdirectory(vendor/glew)
 ## GLM
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glm/)
 
+## imgui
+include_directories(${CMAKE_SOURCE_DIR}/vendor/imgui/)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/imgui/examples/opengl3_example)
+
 
 IF(APPLE)
 	find_library(OPENGL_FRAMEWORK OpenGL)
