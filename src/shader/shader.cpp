@@ -83,7 +83,7 @@ static GLuint createProgram(const char *vsrc, const char *pv, const char *fsrc, 
     glDeleteShader(fobj);
     
     // プログラムオブジェクトのリンク
-    glBindAttribLocation(program, 0, pv);
+//    glBindAttribLocation(program, 0, pv);
 //    glBindFragDataLocationEXT(program, 0, fc);
     glLinkProgram(program);
     printProgramInfoLog(program);
@@ -96,10 +96,10 @@ bool fj::Shader::initialize()
 {
     // バーテックスシェーダのソースプログラム
     static const GLchar vsrc[] =
-    "#version 120\n"
-    "attribute vec3 position;\n"
-    "attribute vec3 normal;\n"
-    "varying vec3 normalOut;\n"
+    "#version 330 core\n"
+    "layout (location = 0) in vec3 position;\n"
+    "layout (location = 1) in vec3 normal;\n"
+    "out vec3 normalOut;\n"
     "uniform mat4 projectionMatrix;\n"
     "uniform mat4 viewMatrix;\n"
     "uniform mat4 modelMatrix;\n"
@@ -111,11 +111,12 @@ bool fj::Shader::initialize()
     
     // フラグメントシェーダのソースプログラム
     static const GLchar fsrc[] =
-    "#version 120\n"
-    "varying vec3 normalOut;\n"
+    "#version 330 core\n"
+    "in vec3 normalOut;\n"
+    "out vec4 color;\n"
     "void main(void)\n"
     "{\n"
-    "  gl_FragColor = vec4(normalOut[0], normalOut[1], normalOut[2], 1.0);\n"
+    "  color = vec4(normalOut[0], normalOut[1], normalOut[2], 1.0);\n"
     "}\n";
     
     // プログラムオブジェクトの作成

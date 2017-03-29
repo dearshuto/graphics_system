@@ -16,12 +16,12 @@
 
 fj::Object::Object()
 {
-    glGenBuffers(1, &m_VAO);
+    glGenVertexArrays(1, &m_VAO);
 }
 
 fj::Object::~Object()
 {
-    glDeleteBuffers(1, &m_VAO);
+    glDeleteVertexArrays(1, &m_VAO);
 }
 
 void fj::Object::draw(const fj::Shader &shader)const

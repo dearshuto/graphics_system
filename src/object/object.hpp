@@ -33,7 +33,7 @@ public:
     
     virtual GLsizei getDrawNum()const = 0;
     
-private:
+protected:
     GLuint m_VAO;
 };
 
