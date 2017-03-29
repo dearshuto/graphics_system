@@ -22,17 +22,17 @@ public:
     Shader() = default;
     virtual~Shader() = default;
     
-    bool initialize();
-    
-    void load()const;
-    void unload()const;
-    
     GLuint getUniformPosition(const std::string& variableName)const;
     
-    GLuint getProgram()const;
+    GLuint getShaderObject()const;
+    
+    bool compileShader(const std::string& source);
+    
+protected:
+    virtual GLenum getShaderType()const = 0;
     
 private:
-    GLuint m_program;
+    GLuint m_shaderObject = 0;
 };
 
 #endif /* shader_hpp */

@@ -14,7 +14,7 @@
 #include "utility/OpenGL.h"
 
 namespace fj {
-    class Shader;
+    class ShaderProgram;
     class Object;
 }
 
@@ -27,7 +27,7 @@ public:
     
     virtual bool initialize() = 0;
     
-    void draw(const fj::Shader& shader)const;
+    void draw(const fj::ShaderProgram& shader)const;
     
     GLuint getVertexArrayObject()const;
     
