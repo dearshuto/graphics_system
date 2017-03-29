@@ -87,10 +87,8 @@ void fj::WindowManager::mainloop()
     fj::ShaderProgram shaderProgram{fragmentShader, vertexShader};
     shaderProgram.createProgram();
     
-    
-    auto object = std::make_unique<fj::FormattedObject>(std::make_unique<fj::WavefrontObjLoader>());
-    
-//    shader->initialize();
+    auto loader = std::make_unique<fj::WavefrontObjLoader>();
+    auto object = std::make_unique<fj::FormattedObject>(std::move(loader));
     object->loadFromFile("armadillo.obj");
     object->initialize();
     
