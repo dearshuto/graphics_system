@@ -22,19 +22,12 @@ namespace fj {
 class fj::Object
 {
 public:
-    Object();
-    virtual~Object();
+    Object() = default;
+    virtual~Object() = default;
     
-    virtual bool initialize() = 0;
+    virtual void pollEvent() = 0;
     
-    void draw(const fj::ShaderProgram& shader)const;
-    
-    GLuint getVertexArrayObject()const;
-    
-    virtual GLsizei getDrawNum()const = 0;
-    
-protected:
-    GLuint m_VAO;
+    virtual void render()const = 0;    
 };
 
 #endif /* object_hpp */

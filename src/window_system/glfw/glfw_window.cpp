@@ -22,11 +22,10 @@ void refleshWindowCallback(GLFWwindow* window)
     clearWindow(window);
 }
 
-fj::GLFWWindow::GLFWWindow(const fj::WindowInfo& info)
+fj::GLFWWindow::GLFWWindow(GLFWwindow*const window)
+: m_window(window)
 {
-    m_window = glfwCreateWindow(info.Width, info.Height, "", nullptr, nullptr);
-    glfwSetWindowRefreshCallback(m_window, refleshWindowCallback);
-    glfwMakeContextCurrent(m_window);
+    
 }
 
 bool fj::GLFWWindow::shouldUpdate()const
@@ -34,15 +33,9 @@ bool fj::GLFWWindow::shouldUpdate()const
     return (glfwWindowShouldClose(m_window) == GLFW_FALSE);
 }
 
-void fj::GLFWWindow::clear()
-{
-    clearWindow(m_window);
-}
-
-void fj::GLFWWindow::swapBuffers()
+void fj::GLFWWindow::swapBuffers()const
 {
     glfwSwapBuffers(m_window);
-//    glfwWaitEvents();
 }
 
 void fj::GLFWWindow::terminate()

@@ -6,16 +6,37 @@
 //
 //
 
-#include "window_system/window_manager.hpp"
-#include "window_system/glfw/glfw_window_toolkit_builder.hpp"
+#include <memory>
+#include <string>
+#include "window_system/glfw_glew_system.hpp"
+#include "app/basic_shader.hpp"
+#include "app/shader_editor.hpp"
 
 int main(int argc, char** argv)
 {
-    fj::WindowManager windowManager;
+    std::unique_ptr<fj::WindowManager> app;
     
-    windowManager.initialize();
-    windowManager.mainloop();
-    windowManager.terminate();
+    if (argc < 2)
+    {
+        app.reset(new fj::BasicShader);
+    }
+    else
+    {
+        switch (std::stoi(argv[1]))
+        {
+            default:
+            case 0:
+                app.reset(new fj::BasicShader);
+                break;
+            case 1:
+                app.reset(new fj::ShaderEditor);
+                break;
+        }
+    }
+    
+    app->initialize({640, 480});
+    app->mainloop();
+    app->terminate();
         
     return 0;
 }

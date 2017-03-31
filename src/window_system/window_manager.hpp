@@ -10,39 +10,65 @@
 #define window_manager_hpp
 
 #include <memory>
-#include "window_container.hpp"
-#include "window_system.hpp"
+#include "window.hpp"
 
 namespace fj {
-    class WindowToolkitBuilder;
-    struct WindowInfo;
     class WindowManager;
 }
 
 /// 表示するウィンドウを管理するクラス
+/** ウィンドウは1つに限定する. */
 class fj::WindowManager
 {
 public:
+//---- Default Constructor/Destructor ------------------------------------------
     WindowManager() = default;
     virtual~WindowManager() = default;
     
+    
+//---- Copy Functions ----------------------------------------------------------
     WindowManager(const fj::WindowManager& other) = delete;
     fj::WindowManager& operator=(const fj::WindowManager& other) = delete;
-        
-    bool initialize();
+    
+    
+//---- Public FUnctions --------------------------------------------------------
+    bool initialize(const fj::WindowInfo& windowInfo);
     void mainloop();
     void terminate();
     
-private:
-    void generateWindow(const fj::WindowInfo& info);
     
+//---- Virtual Functions -------------------------------------------------------
 private:
-    const fj::WindowSystem& getWindowSystem()const;
-    fj::WindowSystem*const getWindowSystemPtr();
-private:
-    std::unique_ptr<fj::Window> m_mainWindow;
+    /** アプリケーションの初期セッティング.
+     * @pre Windowが1つ作成されている. */
+    virtual void setup() = 0;
     
-    std::unique_ptr<fj::WindowSystem> m_windowSystem{nullptr};
+    /** ウィンドウに描画する. この関数は毎フレーム呼ばれる.
+     * @pre イベントが検出されている. */
+    virtual void render()const = 0;
+
+    
+//---- Protected Getters -------------------------------------------------------
+protected:
+    const fj::Window& getWindow()const;
+    fj::Window*const getWindowPtr();
+    
+    
+//---- Private Functions -------------------------------------------------------
+private:
+    /** ウィンドウの更新or閉じるを判定する. */
+    bool shouldUpdate()const;
+    
+    /** イベントを処理する */
+    virtual void pollEvent();
+    
+    /**  */
+    void swapBuffers()const;
+
+    
+//---- Member Variables --------------------------------------------------------
+private:
+    std::unique_ptr<fj::Window> m_window;
 };
 
 #endif /* window_manager_hpp */

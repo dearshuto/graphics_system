@@ -67,6 +67,10 @@ add_definitions("-Wall -std=c++14")
 add_executable(graphic_system
 	${ALL_FILES}
 	${IMGUI_SOURCES}
+	${CMAKE_SOURCE_DIR}/vendor/imgui/imgui.cpp
+	${CMAKE_SOURCE_DIR}/vendor/imgui/imgui_demo.cpp
+	${CMAKE_SOURCE_DIR}/vendor/imgui/imgui_draw.cpp
+#	${CMAKE_SOURCE_DIR}/vendor/imgui/examples/opengl3_example/imgui_impl_glfw_gl3.cpp
 )
 
 

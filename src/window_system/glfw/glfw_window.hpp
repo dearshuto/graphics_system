@@ -23,15 +23,16 @@ public:
     GLFWWindow() = delete;
     ~GLFWWindow() = default;
     
-    GLFWWindow(const fj::WindowInfo& info);
+    GLFWWindow(GLFWwindow*const window);
     
     bool shouldUpdate()const override;
-    void clear()override;
-    void swapBuffers()override;
+    
+    void swapBuffers()const override;
+    
     void terminate()override;
     
 private:
-    GLFWwindow* m_window;
+    GLFWwindow*const m_window;
 };
 
 #endif /* glfw_window_hpp */

@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <string>
-#include <Gl/glew.h>
 #include "shader.hpp"
 
 void printError(const GLuint obj)

@@ -29,8 +29,7 @@ public:
     virtual~Window() = default;
     
     virtual bool shouldUpdate()const = 0;
-    virtual void clear()= 0;
-    virtual void swapBuffers()= 0;
+    virtual void swapBuffers()const = 0;
     virtual void terminate() = 0;
 };
 

@@ -11,6 +11,7 @@
 
 #include <memory>
 #include <string>
+#include "utility/OpenGL.h"
 
 namespace fj {
     class FragmentShader;

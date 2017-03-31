@@ -10,7 +10,7 @@
 #define formatted_object_hpp
 
 #include "loader/mesh_loader.hpp"
-#include "object.hpp"
+#include "polygon.hpp"
 #include <memory>
 
 namespace fj {
@@ -18,17 +18,19 @@ namespace fj {
 }
 
 /// 外部のメッシュデータから構成されるオブジェクト
-class fj::FormattedObject : public fj::Object
+class fj::FormattedObject : public fj::Polygon
 {
 public:
     FormattedObject() = delete;
     FormattedObject(std::unique_ptr<fj::MeshLoader> loader);
     ~FormattedObject() = default;
     
-    bool initialize()override;
+    bool initialize();
     
     bool loadFromFile(const std::string& filename);
 
+    void pollEvent()override{};
+    
     GLsizei getDrawNum()const override;
     
     fj::MeshLoader*const getMeshLoaderPtr();

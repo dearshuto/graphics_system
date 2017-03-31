@@ -10,6 +10,7 @@
 #define window_system_hpp
 
 #include <memory>
+#include "utility/OpenGL.h"
 
 namespace fj {
     class Window;
@@ -24,13 +25,22 @@ protected:
 public:
     virtual~WindowSystem() = default;
     
-    virtual bool initialize() = 0;
+    static fj::WindowSystem* GetInstance();
     
     virtual std::unique_ptr<fj::Window> generateWindow(const fj::WindowInfo& info)const = 0;
     
-    virtual void waitEvent()const = 0;
+    virtual void pollEvent()const = 0;
     
     virtual void terminate() = 0;
+    
+//---- Extension Function
+    virtual GLdouble getTime()const = 0;
+    
+    virtual void genVertexArrays(GLsizei n, GLuint* arrays)const = 0;
+    
+    virtual void deleteVertexArrays(GLsizei n, GLuint* arrays)const = 0;
+    
+    virtual void bindVertexArray(GLuint array)const = 0;
 };
 
 #endif /* window_system_hpp */
