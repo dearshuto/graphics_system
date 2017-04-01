@@ -10,6 +10,7 @@
 #define window_manager_hpp
 
 #include <memory>
+#include "gui/gui_toolkit.hpp"
 #include "window.hpp"
 
 namespace fj {
@@ -53,14 +54,17 @@ protected:
     const fj::Window& getWindow()const;
     fj::Window*const getWindowPtr();
     
-    
+    const fj::GUIToolkit& getGUIToolkit()const;
+    fj::GUIToolkit*const getGUIToolkitPtr();
 //---- Private Functions -------------------------------------------------------
 private:
     /** ウィンドウの更新or閉じるを判定する. */
     bool shouldUpdate()const;
     
+    void detectEvent();
+    
     /** イベントを処理する */
-    virtual void pollEvent();
+    virtual void pollEvent() = 0;
     
     /**  */
     void swapBuffers()const;
@@ -68,7 +72,7 @@ private:
     
 //---- Member Variables --------------------------------------------------------
 private:
-    std::unique_ptr<fj::Window> m_window;
+    std::unique_ptr<fj::GUIToolkit> m_guiToolkit;
 };
 
 #endif /* window_manager_hpp */

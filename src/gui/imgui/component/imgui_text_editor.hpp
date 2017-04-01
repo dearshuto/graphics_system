@@ -26,6 +26,8 @@ public:
     
     void pollInputEvent()override;
     
+    const std::string& getText()const override;
+    
 private:
     std::string m_buffer;
 };

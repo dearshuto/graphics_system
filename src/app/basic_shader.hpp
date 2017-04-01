@@ -26,6 +26,9 @@ public:
     /** @copydoc Super::setup() */
     void setup()override;
     
+    /** @copydoc Super::pollEvent()  */
+    void pollEvent()override;
+    
     /** @copydoc Super::setup() */
     void render()const override;
     

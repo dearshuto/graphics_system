@@ -24,7 +24,14 @@ protected:
 public:
     ~GLFWGLEWSystem() = default;
     
+    GLFWGLEWSystem(const fj::GLFWGLEWSystem& other) = delete;
+    GLFWGLEWSystem& operator=(const fj::GLFWGLEWSystem& other) = delete;
+    
 //---- Override Functions ------------------------------------------------------
+    bool generateWindow(const fj::WindowInfo& info)override;
+    
+    std::unique_ptr<fj::GUIToolkit> generateGUIToolkit()const override;
+
     GLdouble getTime()const override;
 
     void genVertexArrays(GLsizei n, GLuint* arrays)const override;
@@ -32,8 +39,6 @@ public:
     void deleteVertexArrays(GLsizei n, GLuint* arrays)const override;
     
     void bindVertexArray(GLuint array)const override;
-
-    std::unique_ptr<fj::Window> generateWindow(const fj::WindowInfo& info)const override;
     
     void pollEvent()const override;
     

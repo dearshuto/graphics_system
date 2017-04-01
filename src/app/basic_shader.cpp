@@ -13,7 +13,6 @@
 #include "shader/shader_program.hpp"
 #include "shader/fragment_shader.hpp"
 #include "shader/vertex_shader.hpp"
-#include "utility/iterator.hpp"
 #include "utility/OpenGL.h"
 #include "window_system/window_system.hpp"
 #include "basic_shader.hpp"
@@ -70,6 +69,11 @@ void fj::BasicShader::setup()
     m_object->loadFromFile("armadillo.obj");
     m_object->initialize();
     m_object->setShaderPrgram(shaderProgram);
+}
+
+void fj::BasicShader::pollEvent()
+{
+    
 }
 
 void fj::BasicShader::render()const

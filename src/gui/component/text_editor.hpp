@@ -9,6 +9,7 @@
 #ifndef text_editor_hpp
 #define text_editor_hpp
 
+#include <string>
 #include "gui.hpp"
 
 namespace fj {
@@ -22,6 +23,8 @@ public:
     ~TextEditor() = default;
     
     void pollEvent()override;
+    
+    virtual const std::string& getText()const = 0;
     
 private:
     virtual void pollInputEvent() = 0;

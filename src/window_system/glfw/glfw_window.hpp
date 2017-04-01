@@ -31,6 +31,7 @@ public:
     
     void terminate()override;
     
+    GLFWwindow*const getRawWindowPtr();
 private:
     GLFWwindow*const m_window;
 };

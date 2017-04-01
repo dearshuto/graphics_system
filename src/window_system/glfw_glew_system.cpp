@@ -9,6 +9,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "glfw/glfw_window.hpp"
+#include "gui/imgui/imgui_toolkit.hpp"
 #include "glfw_glew_system.hpp"
 
 GLdouble fj::GLFWGLEWSystem::getTime()const
@@ -31,7 +32,7 @@ void fj::GLFWGLEWSystem::bindVertexArray(GLuint array)const
     glBindVertexArray(array);
 }
 
-std::unique_ptr<fj::Window> fj::GLFWGLEWSystem::generateWindow(const fj::WindowInfo &info)const
+bool fj::GLFWGLEWSystem::generateWindow(const fj::WindowInfo &info)
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -45,7 +46,12 @@ std::unique_ptr<fj::Window> fj::GLFWGLEWSystem::generateWindow(const fj::WindowI
     glewExperimental = GL_TRUE;
     glewInit();
     
-    return std::make_unique<fj::GLFWWindow>(window);
+    setWindow(std::make_unique<fj::GLFWWindow>(window));
+}
+
+std::unique_ptr<fj::GUIToolkit> fj::GLFWGLEWSystem::generateGUIToolkit()const
+{
+    return std::make_unique<fj::ImguiToolkit>();
 }
 
 void fj::GLFWGLEWSystem::pollEvent()const

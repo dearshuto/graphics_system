@@ -10,16 +10,19 @@
 #include <GLFW/glfw3.h>
 #include "imgui_text_editor.hpp"
 
+void fj::ImguiTextEditor::pollInputEvent()
+{
+    char buffer[256];
+    ImGui::InputTextMultiline("label", buffer, 256);
+    m_buffer = buffer;
+}
+
 void fj::ImguiTextEditor::draw()const
 {
     
 }
 
-void fj::ImguiTextEditor::pollInputEvent()
+const std::string& fj::ImguiTextEditor::getText()const
 {
-    ImGui::NewFrame();
-    char buffer[256];
-    
-    ImGui::InputTextMultiline("label", buffer, 256);
-    m_buffer = buffer;
+    return m_buffer;
 }

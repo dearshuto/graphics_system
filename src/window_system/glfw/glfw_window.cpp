@@ -42,3 +42,8 @@ void fj::GLFWWindow::terminate()
 {
     glfwDestroyWindow(m_window);
 }
+
+GLFWwindow*const fj::GLFWWindow::getRawWindowPtr()
+{
+    return m_window;
+}
